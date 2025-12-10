@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情绪管理与心理韧性测试 - 开始测试</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+
+        :root {
+            --primary: #5d8aa8;
+            --primary-light: #7ba6c2;
+            --secondary: #ff9a76;
+            --secondary-light: #ffb696;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --gray: #e9ecef;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .back-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: var(--secondary);
+        }
+
+        /* 主要内容区域 */
+        main {
+            padding: 40px 0;
+        }
+
+        /* 测试页面样式 */
+        .test-page {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .test-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .test-title {
+            font-size: 2.8rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .test-subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* 进度条 */
+        .progress-container {
+            width: 100%;
+            background-color: var(--gray);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            height: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        /* 题目容器 */
+        .questions-container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            min-height: 500px;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .questions-container.slide-out-left {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+
+        .questions-container.slide-out-right {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        .questions-container.slide-in-left {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+
+        .questions-container.slide-in-right {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        .question-group {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--gray);
+            padding-bottom: 40px;
+        }
+
+        .question-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .question-number {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .question-number:before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary);
+            border-radius: 50%;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            color: var(--dark);
+            margin-bottom: 25px;
+            padding-left: 20px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding-left: 20px;
+        }
+
+        .option {
+            padding: 20px;
+            border: 2px solid var(--gray);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .option:hover {
+            border-color: var(--primary-light);
+            background-color: rgba(93, 138, 168, 0.05);
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background-color: rgba(93, 138, 168, 0.1);
+            box-shadow: 0 4px 10px rgba(93, 138, 168, 0.1);
+        }
+
+        .option input {
+            display: none;
+        }
+
+        .option-label {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+            font-weight: bold;
+            color: var(--primary);
+            background-color: white;
+        }
+
+        .option.selected .option-label {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .option-text {
+            font-size: 1.2rem;
+            color: #444;
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(93, 138, 168, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(93, 138, 168, 0.4);
+            background: linear-gradient(to right, var(--primary-light), var(--primary));
+        }
+
+        .btn-secondary {
+            background: linear-gradient(to right, var(--secondary), var(--secondary-light));
+            box-shadow: 0 4px 15px rgba(255, 154, 118, 0.3);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 6px 20px rgba(255, 154, 118, 0.4);
+            background: linear-gradient(to right, var(--secondary-light), var(--secondary));
+        }
+
+        .btn:disabled {
+            background: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn:disabled:hover {
+            background: #cccccc;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* 结果页面样式 */
+        .result-page {
+            display: none;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .result-icon {
+            font-size: 6rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        .result-title {
+            font-size: 3rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .result-score {
+            font-size: 1.8rem;
+            color: #666;
+            margin-bottom: 30px;
+            background-color: white;
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .result-level {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .result-details {
+            background: white;
+            border-radius: 15px;
+            padding: 50px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .result-details h3 {
+            color: var(--dark);
+            margin-bottom: 25px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .result-details p {
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .recommendations {
+            background: white;
+            border-radius: 15px;
+            padding: 50px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            text-align: left;
+            margin-bottom: 50px;
+        }
+
+        .recommendations h3 {
+            color: var(--dark);
+            margin-bottom: 25px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .recommendations ul {
+            padding-left: 25px;
+        }
+
+        .recommendations li {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .result-actions {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        /* 保存结果按钮 */
+        .btn-save {
+            background: linear-gradient(to right, #4caf50, #66bb6a);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-save:hover {
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+            background: linear-gradient(to right, #66bb6a, #4caf50);
+        }
+
+        /* 历史结果区域 */
+        .history-results {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+            display: none;
+        }
+
+        .history-results h3 {
+            color: var(--dark);
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .history-item {
+            border: 1px solid var(--gray);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+        }
+
+        .history-date {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .history-score {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .history-level {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .no-history {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+            padding: 20px;
+        }
+
+        /* 分页指示器 */
+        .page-indicator {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            margin-bottom: 12px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--secondary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .test-title {
+                font-size: 2.3rem;
+            }
+
+            .question-text {
+                font-size: 1.3rem;
+            }
+
+            .option-text {
+                font-size: 1.1rem;
+            }
+
+            .result-details, .recommendations {
+                padding: 35px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .test-title {
+                font-size: 2rem;
+            }
+
+            .test-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .questions-container {
+                padding: 25px;
+            }
+
+            .question-text {
+                font-size: 1.2rem;
+            }
+
+            .result-details, .recommendations {
+                padding: 25px;
+            }
+
+            .result-title {
+                font-size: 2.2rem;
+            }
+
+            .result-score {
+                font-size: 1.4rem;
+                padding: 12px 25px;
+            }
+
+            .result-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .result-actions .btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+
+            .option {
+                padding: 15px;
+            }
+
+            .option-text {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .test-title {
+                font-size: 1.7rem;
+            }
+
+            .question-text {
+                font-size: 1.1rem;
+            }
+
+            .question-number {
+                font-size: 1.2rem;
+            }
+
+            .option-label {
+                width: 22px;
+                height: 22px;
+                font-size: 0.9rem;
+            }
+
+            .result-title {
+                font-size: 1.8rem;
+            }
+
+            .result-details p, .recommendations li {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <h1>情绪管理与<span>心理韧性</span>测试</h1>
+            </div>
+
+            <nav>
+                <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> 返回首页</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main>
+        <!-- 测试页面 -->
+        <section id="testPage" class="test-page">
+            <div class="container">
+                <div class="test-header">
+                    <h2 class="test-title">情绪管理与心理韧性测试</h2>
+                    <p class="test-subtitle">
+                        请根据您的实际情况，选择最符合您情况的选项。本测试共50题，大约需要15-20分钟。
+                        请如实回答所有问题，以获得准确的评估结果。
+                    </p>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+
+                <div class="progress-text" id="progressText">已完成 0/50 题</div>
+
+                <!-- 题目容器 -->
+                <div class="questions-container" id="questionsContainer">
+                    <!-- 题目会通过JavaScript动态加载 -->
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn" id="prevBtn" disabled>上一页</button>
+                    <button class="btn" id="nextBtn">下一页</button>
+                    <button class="btn btn-secondary" id="submitBtn" style="display:none;">提交答案</button>
+                </div>
+
+                <div class="page-indicator" id="pageIndicator">第 1/10 页</div>
+            </div>
+        </section>
+
+        <!-- 结果页面 -->
+        <section id="resultPage" class="result-page">
+            <div class="container">
+                <div class="result-header">
+                    <div class="result-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h2 class="result-title">您的测试结果</h2>
+                    <div class="result-score" id="resultScore">总分：0/250</div>
+                    <div class="result-level" id="resultLevel">测试结果等级</div>
+                </div>
+
+                <div class="result-details">
+                    <h3>分析报告</h3>
+                    <p id="resultAnalysis">根据您的测试结果，系统正在生成分析报告...</p>
+                    <p id="resultDetails">详细分析内容将在此处显示。</p>
+                </div>
+
+                <div class="recommendations">
+                    <h3>个性化建议</h3>
+                    <ul id="recommendationsList">
+                        <!-- 建议会通过JavaScript动态生成 -->
+                    </ul>
+                </div>
+
+                <div class="result-actions">
+                    <button class="btn" id="retakeBtn">重新测试</button>
+                    <button class="btn btn-save" id="saveResultBtn">保存结果</button>
+                    <button class="btn btn-secondary" id="backToHomeBtn">返回首页</button>
+                </div>
+
+                <!-- 历史结果区域 -->
+                <div class="history-results" id="historyResults">
+                    <h3>历史测试记录</h3>
+                    <div id="historyList">
+                        <!-- 历史记录会通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>情绪管理与心理韧性测试</h3>
+                    <p>专业的心理评估工具，帮助您了解自己的情绪管理能力和心理韧性水平。</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>重要说明</h3>
+                    <p>本测试结果仅供参考，不能替代专业心理咨询或诊断。如有需要，请寻求专业心理帮助。</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>联系我们</h3>
+                    <p><i class="fas fa-envelope"></i> contact@emotionaltest.com</p>
+                    <p><i class="fas fa-phone"></i> 400-123-4567</p>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2023 情绪管理与心理韧性测试平台. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 情绪管理与心理韧性测试题库 - 50道题
+        const questions = [
+            {
+                id: 1,
+                text: "当工作/学习中遇到突发困难时，你通常会？",
+                options: [
+                    { text: "冷静分析问题，立刻着手寻找解决办法", score: 5 },
+                    { text: "有些慌乱，但会在短时间内调整状态开始应对", score: 3 },
+                    { text: "不知所措，容易陷入焦虑，需要他人催促才行动", score: 1 }
+                ]
+            },
+            {
+                id: 2,
+                text: "听到他人对你的负面评价时，你的反应是？",
+                options: [
+                    { text: "理性看待，反思是否有改进空间", score: 5 },
+                    { text: "心里会不舒服，但不会影响太久，很快释怀", score: 3 },
+                    { text: "非常在意，会反复纠结，甚至怀疑自己", score: 1 }
+                ]
+            },
+            {
+                id: 3,
+                text: "每天结束后，你能清晰说出自己当天主要的情绪变化吗？",
+                options: [
+                    { text: "能，对自己的情绪感知很敏锐", score: 5 },
+                    { text: "大概能说出，部分细微情绪会忽略", score: 3 },
+                    { text: "说不清楚，很少关注自己的情绪", score: 1 }
+                ]
+            },
+            {
+                id: 4,
+                text: "当朋友向你倾诉烦恼时，你会？",
+                options: [
+                    { text: "认真倾听，主动共情并给出合理建议", score: 5 },
+                    { text: "耐心倾听，但不太擅长给出具体建议", score: 3 },
+                    { text: "感到不耐烦，希望对方尽快结束话题", score: 1 }
+                ]
+            },
+            {
+                id: 5,
+                text: "面对计划被突然打乱的情况，你会？",
+                options: [
+                    { text: "快速调整计划，尽量减少影响", score: 5 },
+                    { text: "有点烦躁，但会被动接受并执行新安排", score: 3 },
+                    { text: "情绪低落，无法集中精力处理新任务", score: 1 }
+                ]
+            },
+            {
+                id: 6,
+                text: "你是否经常通过运动、倾诉等方式释放压力？",
+                options: [
+                    { text: "是的，有固定的压力释放方式", score: 5 },
+                    { text: "偶尔会，但没有固定习惯", score: 3 },
+                    { text: "很少，压力大时通常独自硬扛", score: 1 }
+                ]
+            },
+            {
+                id: 7,
+                text: "当你感到情绪低落时，会主动尝试改善吗？",
+                options: [
+                    { text: "会，比如做喜欢的事、和朋友见面等", score: 5 },
+                    { text: "想改善，但常常不知道该怎么做", score: 3 },
+                    { text: "不想动，任由情绪持续低落", score: 1 }
+                ]
+            },
+            {
+                id: 8,
+                text: "在团队合作中，若与同事/同学意见分歧，你会？",
+                options: [
+                    { text: "主动沟通，尊重对方观点并寻求共识", score: 5 },
+                    { text: "坚持自己的想法，但不会激烈反驳", score: 3 },
+                    { text: "避免争论，直接妥协或沉默", score: 1 }
+                ]
+            },
+            {
+                id: 9,
+                text: "你对自己的未来规划有清晰的方向吗？",
+                options: [
+                    { text: "有，并且会制定阶段性目标推进", score: 5 },
+                    { text: "有大致方向，但具体计划不明确", score: 3 },
+                    { text: "没有，走一步看一步", score: 1 }
+                ]
+            },
+            {
+                id: 10,
+                text: "当你完成一项有难度的任务后，会？",
+                options: [
+                    { text: "为自己感到骄傲，总结经验以便下次更好", score: 5 },
+                    { text: "觉得轻松，但不会特别关注成果", score: 3 },
+                    { text: "认为是运气，担心下次做不好", score: 1 }
+                ]
+            },
+            {
+                id: 11,
+                text: "你是否容易被他人的情绪带动？",
+                options: [
+                    { text: "不容易，能保持自己的情绪稳定", score: 5 },
+                    { text: "偶尔会，尤其是身边人情绪波动大时", score: 3 },
+                    { text: "很容易，别人开心我就开心，别人难过我也低落", score: 1 }
+                ]
+            },
+            {
+                id: 12,
+                text: "面对生活中的小挫折（如丢东西、迟到），你会？",
+                options: [
+                    { text: "一笑而过，尽快处理后续问题", score: 5 },
+                    { text: "会抱怨几句，但很快恢复平静", score: 3 },
+                    { text: "耿耿于怀，一整天都受影响", score: 1 }
+                ]
+            },
+            {
+                id: 13,
+                text: "你是否经常花时间自我反思？",
+                options: [
+                    { text: "是的，每周都会总结自己的言行和情绪", score: 5 },
+                    { text: "偶尔会，比如遇到重大事件后", score: 3 },
+                    { text: "很少，几乎不反思", score: 1 }
+                ]
+            },
+            {
+                id: 14,
+                text: "当你有需求时，会主动向他人表达吗？",
+                options: [
+                    { text: "会，清晰、礼貌地说出自己的需求", score: 5 },
+                    { text: "犹豫后会说，但表达不够直接", score: 3 },
+                    { text: "不会，担心给别人添麻烦", score: 1 }
+                ]
+            },
+            {
+                id: 15,
+                text: "你对自己的能力是否有清晰的认知？",
+                options: [
+                    { text: "有，知道自己的优势和不足", score: 5 },
+                    { text: "大概知道，但不够全面", score: 3 },
+                    { text: "不清楚，常常自我怀疑", score: 1 }
+                ]
+            },
+            {
+                id: 16,
+                text: "当工作/学习任务繁重时，你会？",
+                options: [
+                    { text: "制定优先级，有条理地逐一完成", score: 5 },
+                    { text: "有点焦虑，但会尽力赶进度", score: 3 },
+                    { text: "不知所措，容易拖延", score: 1 }
+                ]
+            },
+            {
+                id: 17,
+                text: "你是否喜欢与人建立深度的人际关系？",
+                options: [
+                    { text: "喜欢，有几个知心朋友能相互支持", score: 5 },
+                    { text: "一般，有普通朋友但很少深交", score: 3 },
+                    { text: "不喜欢，觉得人际关系麻烦", score: 1 }
+                ]
+            },
+            {
+                id: 18,
+                text: "当你犯错时，会如何面对？",
+                options: [
+                    { text: "主动承认，承担责任并及时改正", score: 5 },
+                    { text: "被迫承认，但不太愿意反思", score: 3 },
+                    { text: "尽量隐瞒，害怕被批评", score: 1 }
+                ]
+            },
+            {
+                id: 19,
+                text: "你是否能接受自己的不完美？",
+                options: [
+                    { text: "能，接受不完美并努力提升", score: 5 },
+                    { text: "偶尔能，但有时会因不完美而自卑", score: 3 },
+                    { text: "不能，对自己要求极高，容不得一点瑕疵", score: 1 }
+                ]
+            },
+            {
+                id: 20,
+                text: "面对他人的求助，你会？",
+                options: [
+                    { text: "力所能及的情况下主动帮忙", score: 5 },
+                    { text: "别人再三请求才会帮忙", score: 3 },
+                    { text: "找借口推脱，不想被打扰", score: 1 }
+                ]
+            },
+            {
+                id: 21,
+                text: "你是否有规律的作息和生活习惯？",
+                options: [
+                    { text: "有，作息规律，注重生活品质", score: 5 },
+                    { text: "基本有，但偶尔会打乱", score: 3 },
+                    { text: "没有，作息混乱", score: 1 }
+                ]
+            },
+            {
+                id: 22,
+                text: "当你与家人产生矛盾时，会？",
+                options: [
+                    { text: "冷静沟通，换位思考解决问题", score: 5 },
+                    { text: "冷战一段时间后再缓和", score: 3 },
+                    { text: "激烈争吵，互不相让", score: 1 }
+                ]
+            },
+            {
+                id: 23,
+                text: "你对新鲜事物的态度是？",
+                options: [
+                    { text: "积极尝试，愿意接受挑战", score: 5 },
+                    { text: "观望后再决定是否尝试", score: 3 },
+                    { text: "拒绝尝试，喜欢熟悉的环境", score: 1 }
+                ]
+            },
+            {
+                id: 24,
+                text: "当你感到压力过大时，身体会有明显反应吗（如失眠、头痛）？",
+                options: [
+                    { text: "很少有，能很好地调节压力", score: 5 },
+                    { text: "偶尔有，压力缓解后就消失", score: 3 },
+                    { text: "经常有，压力大时身体反应明显", score: 1 }
+                ]
+            },
+            {
+                id: 25,
+                text: "你是否经常赞美他人？",
+                options: [
+                    { text: "是的，善于发现他人的优点并表达", score: 5 },
+                    { text: "偶尔会，但不频繁", score: 3 },
+                    { text: "很少，觉得不好意思或没必要", score: 1 }
+                ]
+            },
+            {
+                id: 26,
+                text: "面对不公平的待遇，你会？",
+                options: [
+                    { text: "理性维权，用合理方式争取权益", score: 5 },
+                    { text: "心里不满，但不会主动争取", score: 3 },
+                    { text: "默默忍受，觉得无能为力", score: 1 }
+                ]
+            },
+            {
+                id: 27,
+                text: "你是否有自己的兴趣爱好并坚持培养？",
+                options: [
+                    { text: "有，每天都会花时间投入兴趣", score: 5 },
+                    { text: "有，但只有空闲时才会接触", score: 3 },
+                    { text: "没有，觉得没什么感兴趣的", score: 1 }
+                ]
+            },
+            {
+                id: 28,
+                text: "当你在公众场合发言时，会？",
+                options: [
+                    { text: "从容自信，清晰表达自己的观点", score: 5 },
+                    { text: "有点紧张，但能完成发言", score: 3 },
+                    { text: "极度紧张，说不出话或语无伦次", score: 1 }
+                ]
+            },
+            {
+                id: 29,
+                text: "你是否会为了迎合他人而改变自己的想法？",
+                options: [
+                    { text: "不会，坚持自己的原则和想法", score: 5 },
+                    { text: "偶尔会，在不重要的事情上妥协", score: 3 },
+                    { text: "经常会，害怕与他人产生冲突", score: 1 }
+                ]
+            },
+            {
+                id: 30,
+                text: "当你取得成绩时，会主动分享给他人吗？",
+                options: [
+                    { text: "会，与家人朋友分享喜悦", score: 5 },
+                    { text: "别人问起才会说", score: 3 },
+                    { text: "不会，觉得炫耀不好", score: 1 }
+                ]
+            },
+            {
+                id: 31,
+                text: "面对生活中的不确定性，你会？",
+                options: [
+                    { text: "坦然接受，把它当作成长的机会", score: 5 },
+                    { text: "有点担忧，但会尝试适应", score: 3 },
+                    { text: "极度焦虑，无法忍受不确定性", score: 1 }
+                ]
+            },
+            {
+                id: 32,
+                text: "你是否经常与家人保持沟通？",
+                options: [
+                    { text: "是的，每天都会分享生活琐事", score: 5 },
+                    { text: "偶尔会，一周沟通1-2次", score: 3 },
+                    { text: "很少，几乎不主动沟通", score: 1 }
+                ]
+            },
+            {
+                id: 33,
+                text: "当你遇到难以解决的问题时，会？",
+                options: [
+                    { text: "主动向他人请教，寻求帮助", score: 5 },
+                    { text: "自己钻研很久无果后再求助", score: 3 },
+                    { text: "放弃解决，任由问题存在", score: 1 }
+                ]
+            },
+            {
+                id: 34,
+                text: "你对自己的外貌和气质是否满意？",
+                options: [
+                    { text: "满意，接纳自己的外在形象", score: 5 },
+                    { text: "一般，有满意的地方也有不满意的", score: 3 },
+                    { text: "不满意，总觉得自己不够好", score: 1 }
+                ]
+            },
+            {
+                id: 35,
+                text: "在社交场合，你通常是？",
+                options: [
+                    { text: "主动与人交流，融入氛围", score: 5 },
+                    { text: "被动参与，有人搭话就回应", score: 3 },
+                    { text: "独自待着，避免与人交流", score: 1 }
+                ]
+            },
+            {
+                id: 36,
+                text: "当你承诺他人某件事后，会？",
+                options: [
+                    { text: "尽力做到，若无法完成提前说明", score: 5 },
+                    { text: "尽量做到，但偶尔会忘记", score: 3 },
+                    { text: "容易反悔，觉得承诺不重要", score: 1 }
+                ]
+            },
+            {
+                id: 37,
+                text: "你是否经常感到孤独？",
+                options: [
+                    { text: "很少，身边有足够的情感支持", score: 5 },
+                    { text: "偶尔会，在独处时感到孤独", score: 3 },
+                    { text: "经常，即使在人群中也觉得孤独", score: 1 }
+                ]
+            },
+            {
+                id: 38,
+                text: "面对他人的批评，你会？",
+                options: [
+                    { text: "认真倾听，有则改之无则加勉", score: 5 },
+                    { text: "表面接受，心里不服气", score: 3 },
+                    { text: "立刻反驳，觉得对方不了解自己", score: 1 }
+                ]
+            },
+            {
+                id: 39,
+                text: "你是否有明确的人生目标？",
+                options: [
+                    { text: "有，并且在为目标努力", score: 5 },
+                    { text: "有，但还没制定具体计划", score: 3 },
+                    { text: "没有，不知道自己想要什么", score: 1 }
+                ]
+            },
+            {
+                id: 40,
+                text: "当你感到愤怒时，会如何控制？",
+                options: [
+                    { text: "深呼吸冷静，理性表达愤怒", score: 5 },
+                    { text: "暂时隐忍，过后通过其他方式发泄", score: 3 },
+                    { text: "立刻爆发，控制不住自己的情绪", score: 1 }
+                ]
+            },
+            {
+                id: 41,
+                text: "你是否经常阅读或学习心理相关知识？",
+                options: [
+                    { text: "是的，主动学习提升自我认知", score: 5 },
+                    { text: "偶尔会，看到相关内容会浏览", score: 3 },
+                    { text: "很少，对心理知识不感兴趣", score: 1 }
+                ]
+            },
+            {
+                id: 42,
+                text: "在亲密关系中，你能坦诚表达自己的感受吗？",
+                options: [
+                    { text: "能，与伴侣坦诚沟通感受", score: 5 },
+                    { text: "偶尔能，但有些感受会隐藏", score: 3 },
+                    { text: "不能，害怕影响关系", score: 1 }
+                ]
+            },
+            {
+                id: 43,
+                text: "当你完成任务的结果不如预期时，会？",
+                options: [
+                    { text: "分析原因，总结教训", score: 5 },
+                    { text: "有点失落，但很快翻篇", score: 3 },
+                    { text: "自我否定，觉得自己能力不行", score: 1 }
+                ]
+            },
+            {
+                id: 44,
+                text: "你是否会主动维系人际关系？",
+                options: [
+                    { text: "会，定期与朋友、同事联系", score: 5 },
+                    { text: "偶尔会，在重要节日问候", score: 3 },
+                    { text: "不会，等着别人联系自己", score: 1 }
+                ]
+            },
+            {
+                id: 45,
+                text: "面对他人的误解，你会？",
+                options: [
+                    { text: "主动解释，消除误解", score: 5 },
+                    { text: "等待对方发现误解，再解释", score: 3 },
+                    { text: "不解释，觉得清者自清", score: 1 }
+                ]
+            },
+            {
+                id: 46,
+                text: "你是否有良好的饮食习惯？",
+                options: [
+                    { text: "有，注重营养均衡", score: 5 },
+                    { text: "一般，偶尔会暴饮暴食或节食", score: 3 },
+                    { text: "没有，饮食混乱且不规律", score: 1 }
+                ]
+            },
+            {
+                id: 47,
+                text: "当你感到迷茫时，会？",
+                options: [
+                    { text: "主动寻找方向，向他人请教", score: 5 },
+                    { text: "暂时搁置，等待迷茫期过去", score: 3 },
+                    { text: "陷入迷茫无法自拔", score: 1 }
+                ]
+            },
+            {
+                id: 48,
+                text: "你是否经常鼓励自己？",
+                options: [
+                    { text: "是的，遇到困难时给自己打气", score: 5 },
+                    { text: "偶尔会，在情绪好的时候", score: 3 },
+                    { text: "很少，习惯自我否定", score: 1 }
+                ]
+            },
+            {
+                id: 49,
+                text: "在工作/学习中，你是否能专注于任务？",
+                options: [
+                    { text: "能，不受外界干扰", score: 5 },
+                    { text: "基本能，但偶尔会分心", score: 3 },
+                    { text: "不能，很容易被干扰", score: 1 }
+                ]
+            },
+            {
+                id: 50,
+                text: "当你帮助他人后，会有什么感受？",
+                options: [
+                    { text: "很开心，有成就感", score: 5 },
+                    { text: "没什么特别的感受", score: 3 },
+                    { text: "觉得麻烦，希望下次别再找自己", score: 1 }
+                ]
+            }
+        ];
+
+        // 应用状态
+        const totalQuestions = questions.length;
+        const questionsPerPage = 5; // 每页显示5题
+        const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+        let currentPage = 0;
+        let answers = new Array(totalQuestions).fill(null);
+        let totalScore = 0;
+        let currentResult = null; // 存储当前测试结果
+
+        // DOM元素
+        const testPage = document.getElementById('testPage');
+        const resultPage = document.getElementById('resultPage');
+        const questionsContainer = document.getElementById('questionsContainer');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const pageIndicator = document.getElementById('pageIndicator');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultScore = document.getElementById('resultScore');
+        const resultLevel = document.getElementById('resultLevel');
+        const resultAnalysis = document.getElementById('resultAnalysis');
+        const resultDetails = document.getElementById('resultDetails');
+        const recommendationsList = document.getElementById('recommendationsList');
+        const retakeBtn = document.getElementById('retakeBtn');
+        const saveResultBtn = document.getElementById('saveResultBtn');
+        const backToHomeBtn = document.getElementById('backToHomeBtn');
+        const historyResults = document.getElementById('historyResults');
+        const historyList = document.getElementById('historyList');
+
+        // 初始化事件监听器
+        function initEventListeners() {
+            // 导航按钮
+            prevBtn.addEventListener('click', goToPreviousPage);
+            nextBtn.addEventListener('click', goToNextPage);
+            submitBtn.addEventListener('click', submitTest);
+
+            // 结果页面按钮
+            retakeBtn.addEventListener('click', retakeTest);
+            saveResultBtn.addEventListener('click', saveResult);
+            backToHomeBtn.addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+        }
+
+        // 加载当前页的题目
+        function loadCurrentPage() {
+            // 清空容器
+            questionsContainer.innerHTML = '';
+
+            // 计算当前页的题目范围
+            const startIndex = currentPage * questionsPerPage;
+            const endIndex = Math.min(startIndex + questionsPerPage, totalQuestions);
+
+            // 创建题目分组容器
+            for (let i = startIndex; i < endIndex; i++) {
+                const question = questions[i];
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question-group';
+
+                // 创建选项HTML
+                let optionsHTML = '';
+                const optionLabels = ['A', 'B', 'C'];
+
+                question.options.forEach((option, optionIndex) => {
+                    const isSelected = answers[i] === optionIndex;
+                    optionsHTML += `
+                        <div class="option ${isSelected ? 'selected' : ''}" data-question-index="${i}" data-option-index="${optionIndex}">
+                            <div class="option-label">${optionLabels[optionIndex]}</div>
+                            <div class="option-text">${option.text}</div>
+                        </div>
+                    `;
+                });
+
+                questionElement.innerHTML = `
+                    <div class="question-number">第${i + 1}题</div>
+                    <div class="question-text">${question.text}</div>
+                    <div class="options-container">
+                        ${optionsHTML}
+                    </div>
+                `;
+
+                questionsContainer.appendChild(questionElement);
+            }
+
+            // 更新进度条和文本
+            const answeredCount = answers.filter(answer => answer !== null).length;
+            const progressPercentage = (answeredCount / totalQuestions) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `已完成 ${answeredCount}/${totalQuestions} 题`;
+
+            // 更新页面指示器
+            pageIndicator.textContent = `第 ${currentPage + 1}/${totalPages} 页`;
+
+            // 更新导航按钮状态
+            prevBtn.disabled = currentPage === 0;
+
+            if (currentPage === totalPages - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+
+                // 检查是否所有题目都已回答
+                const allAnswered = answers.every(answer => answer !== null);
+                submitBtn.disabled = !allAnswered;
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+
+                // 检查当前页是否所有题目都已回答
+                const currentPageAnswered = answers.slice(startIndex, endIndex).every(answer => answer !== null);
+                nextBtn.disabled = !currentPageAnswered;
+            }
+
+            // 添加选项点击事件
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.getAttribute('data-question-index'));
+                    const optionIndex = parseInt(this.getAttribute('data-option-index'));
+
+                    // 更新答案
+                    answers[questionIndex] = optionIndex;
+
+                    // 更新UI
+                    const questionGroup = this.closest('.question-group');
+                    questionGroup.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+
+                    // 更新进度和按钮状态
+                    updateProgressAndButtons();
+                });
+            });
+        }
+
+        // 更新进度和按钮状态
+        function updateProgressAndButtons() {
+            const answeredCount = answers.filter(answer => answer !== null).length;
+            const progressPercentage = (answeredCount / totalQuestions) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `已完成 ${answeredCount}/${totalQuestions} 题`;
+
+            // 更新按钮状态
+            if (currentPage === totalPages - 1) {
+                const allAnswered = answers.every(answer => answer !== null);
+                submitBtn.disabled = !allAnswered;
+            } else {
+                const startIndex = currentPage * questionsPerPage;
+                const endIndex = Math.min(startIndex + questionsPerPage, totalQuestions);
+                const currentPageAnswered = answers.slice(startIndex, endIndex).every(answer => answer !== null);
+                nextBtn.disabled = !currentPageAnswered;
+            }
+        }
+
+        // 前往上一页（带动画效果）
+        function goToPreviousPage() {
+            if (currentPage <= 0) return;
+
+            // 添加滑出动画
+            questionsContainer.classList.add('slide-out-right');
+
+            // 延迟加载新页面
+            setTimeout(() => {
+                currentPage--;
+                loadCurrentPage();
+
+                // 添加滑入动画
+                questionsContainer.classList.add('slide-in-left');
+
+                // 移除动画类，准备下一次动画
+                setTimeout(() => {
+                    questionsContainer.classList.remove('slide-out-right');
+                    questionsContainer.classList.remove('slide-in-left');
+                }, 500);
+            }, 300);
+        }
+
+        // 前往下一页（带动画效果）
+        function goToNextPage() {
+            if (currentPage >= totalPages - 1) return;
+
+            // 添加滑出动画
+            questionsContainer.classList.add('slide-out-left');
+
+            // 延迟加载新页面
+            setTimeout(() => {
+                currentPage++;
+                loadCurrentPage();
+
+                // 添加滑入动画
+                questionsContainer.classList.add('slide-in-right');
+
+                // 移除动画类，准备下一次动画
+                setTimeout(() => {
+                    questionsContainer.classList.remove('slide-out-left');
+                    questionsContainer.classList.remove('slide-in-right');
+                }, 500);
+            }, 300);
+        }
+
+        // 提交测试
+        function submitTest() {
+            // 检查是否所有题目都已回答
+            const unanswered = answers.filter(answer => answer === null).length;
+            if (unanswered > 0) {
+                alert(`您还有 ${unanswered} 道题目未回答，请完成所有题目后再提交。`);
+                return;
+            }
+
+            // 计算总分
+            totalScore = 0;
+            answers.forEach((answerIndex, questionIndex) => {
+                if (answerIndex !== null) {
+                    const question = questions[questionIndex];
+                    totalScore += question.options[answerIndex].score;
+                }
+            });
+
+            // 显示结果页面
+            showResults();
+        }
+
+        // 显示结果
+        function showResults() {
+            // 确定结果等级
+            let level, analysis, details, recommendations;
+
+            if (totalScore >= 200) {
+                level = "优秀水平 (200-250分)";
+                analysis = "您的情绪管理能力和心理韧性极强。您能清晰感知自身情绪，理性应对压力与挫折，人际关系和谐，对生活充满热情。";
+                details = "您具备出色的情绪调节能力和抗压能力，能够在各种挑战面前保持冷静和积极。您的人际关系良好，拥有健康的生活方式，对自我有清晰的认知。";
+                recommendations = [
+                    "继续保持现有状态，可尝试挑战更具难度的目标，将良好的心理状态转化为成长动力。",
+                    "可尝试分享自身经验，帮助身边有需要的人提升情绪管理能力。",
+                    "定期进行自我反思，持续优化情绪管理策略。"
+                ];
+            } else if (totalScore >= 150) {
+                level = "良好水平 (150-199分)";
+                analysis = "您的心理状态整体良好，具备基本的情绪调节能力和应对压力的技巧，在多数场景下能保持稳定。";
+                details = "您能够较好地管理日常情绪和压力，但在面对极端情况时可能需要更多调整时间。您的人际关系基本和谐，但在深度沟通方面可能有提升空间。";
+                recommendations = [
+                    "针对测试中得分较低的维度进行提升，例如若'公众场合发言'得分低，可主动参与社交活动锻炼表达能力。",
+                    "偶尔感到情绪低落时，可强化减压方法的使用，让心理状态更稳定。",
+                    "建立情绪日记，记录每天的情绪变化和应对方式。"
+                ];
+            } else if (totalScore >= 100) {
+                level = "一般水平 (100-149分)";
+                analysis = "您的心理状态存在一定提升空间，在情绪调节、压力应对或人际关系方面可能偶尔出现困扰，容易受外界影响。";
+                details = "您可能在情绪感知和调节方面遇到挑战，面对压力时容易感到焦虑或无助。您的人际关系可能存在一些困扰，对自我认知不够清晰。";
+                recommendations = [
+                    "建立规律的生活作息，培养固定的兴趣爱好，增强自我认同感。",
+                    "主动学习情绪管理知识，如通过阅读心理书籍、听相关课程提升能力。",
+                    "遇到问题时多与家人朋友沟通，避免独自硬扛，必要时可寻求专业心理支持。"
+                ];
+            } else {
+                level = "需关注水平 (50-99分)";
+                analysis = "您的心理状态可能面临较多挑战，情绪调节能力较弱，容易陷入焦虑、低落等负面情绪，人际关系或生活规划可能存在明显困扰。";
+                details = "您可能在情绪管理和压力应对方面遇到显著困难，容易受负面情绪影响，人际关系可能存在较大挑战，生活规划不够清晰。";
+                recommendations = [
+                    "优先调整生活状态，保证充足睡眠和均衡饮食，这是心理调节的基础。",
+                    "主动向信任的人倾诉内心烦恼，不要封闭自己。",
+                    "尽快寻求专业心理咨询师的帮助，制定系统的调整方案，逐步改善心理状态，避免负面情绪积累。"
+                ];
+            }
+
+            // 保存当前结果
+            currentResult = {
+                score: totalScore,
+                level: level,
+                analysis: analysis,
+                details: details,
+                recommendations: recommendations,
+                date: new Date().toLocaleString()
+            };
+
+            // 更新结果页面
+            resultScore.textContent = `总分：${totalScore}/250`;
+            resultLevel.textContent = level;
+            resultAnalysis.textContent = analysis;
+            resultDetails.textContent = details;
+
+            // 更新建议列表
+            recommendationsList.innerHTML = '';
+            recommendations.forEach(recommendation => {
+                const li = document.createElement('li');
+                li.textContent = recommendation;
+                recommendationsList.appendChild(li);
+            });
+
+            // 切换页面
+            testPage.style.display = 'none';
+            resultPage.style.display = 'block';
+
+            // 加载历史记录
+            loadHistory();
+
+            // 滚动到顶部
+            window.scrollTo(0, 0);
+        }
+
+        // 保存结果
+        function saveResult() {
+            if (!currentResult) {
+                alert('没有可保存的结果！');
+                return;
+            }
+
+            // 保存到本地存储
+            saveResultToLocalStorage();
+
+            // 生成文本文件
+            const textContent = generateResultText();
+
+            // 创建下载链接
+            const blob = new Blob([textContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `情绪管理测试结果_${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            // 显示保存成功消息
+            alert('结果已保存！文件已下载到您的设备中。');
+
+            // 重新加载历史记录
+            loadHistory();
+        }
+
+        // 保存结果到本地存储
+        function saveResultToLocalStorage() {
+            // 获取现有历史记录
+            let history = JSON.parse(localStorage.getItem('emotionalTestHistory')) || [];
+
+            // 添加新结果
+            history.unshift({
+                ...currentResult,
+                id: Date.now() // 使用时间戳作为ID
+            });
+
+            // 只保留最近10条记录
+            if (history.length > 10) {
+                history = history.slice(0, 10);
+            }
+
+            // 保存回本地存储
+            localStorage.setItem('emotionalTestHistory', JSON.stringify(history));
+        }
+
+        // 从本地存储加载历史记录
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('emotionalTestHistory')) || [];
+
+            if (history.length === 0) {
+                historyResults.style.display = 'none';
+                return;
+            }
+
+            // 显示历史记录区域
+            historyResults.style.display = 'block';
+
+            // 清空现有历史记录
+            historyList.innerHTML = '';
+
+            // 添加历史记录
+            history.forEach((result, index) => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+
+                historyItem.innerHTML = `
+                    <div class="history-date">${result.date}</div>
+                    <div class="history-score">总分：${result.score}/250</div>
+                    <div class="history-level">${result.level}</div>
+                `;
+
+                historyList.appendChild(historyItem);
+            });
+        }
+
+        // 生成结果文本内容
+        function generateResultText() {
+            return `
+情绪管理与心理韧性测试 - 结果报告
+测试时间：${currentResult.date}
+========================================
+
+总分：${currentResult.score}/250
+等级：${currentResult.level}
+
+【分析报告】
+${currentResult.analysis}
+
+${currentResult.details}
+
+【个性化建议】
+${currentResult.recommendations.map((rec, index) => `${index + 1}. ${rec}`).join('\n')}
+
+========================================
+说明：本测试结果仅供参考，不能替代专业心理咨询或诊断。
+如有需要，请寻求专业心理帮助。
+            `;
+        }
+
+        // 重新测试
+        function retakeTest() {
+            // 重置状态
+            currentPage = 0;
+            answers = new Array(totalQuestions).fill(null);
+            totalScore = 0;
+            currentResult = null;
+
+            // 切换页面
+            resultPage.style.display = 'none';
+            testPage.style.display = 'block';
+
+            // 重新加载第一页
+            loadCurrentPage();
+
+            // 滚动到顶部
+            window.scrollTo(0, 0);
+        }
+
+        // 初始化应用
+        function initApp() {
+            initEventListeners();
+            loadCurrentPage();
+        }
+
+        // 页面加载完成后初始化应用
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
