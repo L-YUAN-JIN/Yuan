@@ -3,793 +3,646 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>心理健康自测评估</title>
+    <title>情绪管理与心理韧性测试</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+
+        :root {
+            --primary: #5d8aa8;
+            --primary-light: #7ba6c2;
+            --secondary: #ff9a76;
+            --secondary-light: #ffb696;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --gray: #e9ecef;
         }
 
         body {
-            background-color: #f8f9fa;
+            background-color: #f5f7fb;
             color: #333;
             line-height: 1.6;
-            padding: 20px;
-            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 背景效果 */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(93, 138, 168, 0.1) 0%, rgba(93, 138, 168, 0) 70%);
+            animation: float 25s infinite linear;
+        }
+
+        .bubble:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+            background: radial-gradient(circle, rgba(93, 138, 168, 0.15) 0%, rgba(93, 138, 168, 0) 70%);
+        }
+
+        .bubble:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 65%;
+            left: 85%;
+            animation-delay: -8s;
+            background: radial-gradient(circle, rgba(255, 154, 118, 0.12) 0%, rgba(255, 154, 118, 0) 70%);
+        }
+
+        .bubble:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            top: 80%;
+            left: 15%;
+            animation-delay: -15s;
+            background: radial-gradient(circle, rgba(93, 138, 168, 0.1) 0%, rgba(93, 138, 168, 0) 70%);
+        }
+
+        .bubble:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            top: 30%;
+            left: 90%;
+            animation-delay: -5s;
+            background: radial-gradient(circle, rgba(255, 154, 118, 0.1) 0%, rgba(255, 154, 118, 0) 70%);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0.6;
+            }
+            25% {
+                transform: translateY(-30px) translateX(15px) rotate(90deg);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translateY(0) translateX(30px) rotate(180deg);
+                opacity: 0.6;
+            }
+            75% {
+                transform: translateY(30px) translateX(15px) rotate(270deg);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(0) translateX(0) rotate(360deg);
+                opacity: 0.6;
+            }
         }
 
         .container {
-            max-width: 900px;
+            width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
-            background-color: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            padding: 30px;
+            padding: 0 20px;
         }
 
+        /* 头部样式 */
         header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eaeaea;
-        }
-
-        h1 {
-            color: #5a67d8;
-            margin-bottom: 10px;
-            font-size: 2.5rem;
-        }
-
-        .subtitle {
-            color: #718096;
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .test-section {
-            display: none;
-        }
-
-        .active-section {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .intro-text {
-            text-align: center;
-            padding: 20px 0;
-            font-size: 1.2rem;
-            color: #4a5568;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: #5a67d8;
+            background: linear-gradient(135deg, rgba(93, 138, 168, 0.95) 0%, rgba(44, 62, 80, 0.95) 100%);
             color: white;
-            padding: 14px 30px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(90, 103, 216, 0.3);
+            padding: 25px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
         }
 
-        .btn:hover {
-            background-color: #4c51bf;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(90, 103, 216, 0.4);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .question-container {
-            margin: 30px 0;
-        }
-
-        .question {
-            font-size: 1.4rem;
-            margin-bottom: 25px;
-            color: #2d3748;
-            font-weight: 600;
-        }
-
-        .options {
+        .header-content {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
             gap: 15px;
         }
 
-        .option {
-            padding: 18px 20px;
-            background-color: #f7fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 1.1rem;
+        .logo i {
+            font-size: 2.8rem;
+            color: var(--secondary);
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav ul {
             display: flex;
-            align-items: center;
+            list-style: none;
+            gap: 25px;
         }
 
-        .option:hover {
-            background-color: #edf2f7;
-            border-color: #cbd5e0;
-        }
-
-        .option.selected {
-            background-color: #e6fffa;
-            border-color: #38b2ac;
-            color: #234e52;
-        }
-
-        .option-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            background-color: #e2e8f0;
-            border-radius: 50%;
-            margin-right: 15px;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .option.selected .option-number {
-            background-color: #38b2ac;
+        nav a {
             color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            padding: 8px 12px;
+            border-radius: 4px;
         }
 
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #eaeaea;
+        nav a:hover {
+            color: var(--secondary);
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
-        .progress-container {
-            margin: 30px 0;
-        }
-
-        .progress-bar {
-            height: 12px;
-            background-color: #e2e8f0;
-            border-radius: 6px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background-color: #5a67d8;
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-
-        .progress-text {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            color: #718096;
-        }
-
-        .result-container {
-            text-align: center;
-            padding: 30px 20px;
-        }
-
-        .score-circle {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            background-color: #f7fafc;
-            margin: 0 auto 30px;
+        /* 主要内容区域 */
+        .welcome-content {
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border: 8px solid;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .score-value {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1;
-        }
-
-        .score-label {
-            font-size: 1.2rem;
-            color: #718096;
-            margin-top: 5px;
-        }
-
-        .result-title {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: #2d3748;
-        }
-
-        .result-description {
-            font-size: 1.1rem;
-            color: #4a5568;
-            max-width: 700px;
-            margin: 0 auto 25px;
-            line-height: 1.7;
-        }
-
-        .suggestions {
-            background-color: #f0fff4;
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 30px;
-            text-align: left;
-            border-left: 5px solid #38b2ac;
-        }
-
-        .suggestions h3 {
-            color: #234e52;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .suggestions ul {
-            padding-left: 20px;
-        }
-
-        .suggestions li {
-            margin-bottom: 10px;
-            color: #2d3748;
-        }
-
-        .warning {
-            background-color: #fffaf0;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 20px;
-            border-left: 5px solid #ed8936;
-            font-size: 0.95rem;
-            color: #744210;
-        }
-
-        footer {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #eaeaea;
-            color: #718096;
-            font-size: 0.9rem;
+            padding: 80px 20px 60px;
+            animation: fadeIn 1.5s ease-out;
         }
 
-        .hidden {
-            display: none;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-icon {
+            font-size: 6rem;
+            color: var(--primary);
+            margin-bottom: 40px;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                color: var(--primary);
+            }
+            50% {
+                transform: scale(1.05);
+                color: var(--primary-light);
+            }
+            100% {
+                transform: scale(1);
+                color: var(--primary);
+            }
+        }
+
+        .welcome-title {
+            font-size: 4rem;
+            color: var(--dark);
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+
+        .welcome-subtitle {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        .welcome-text {
+            font-size: 1.3rem;
+            max-width: 850px;
+            margin: 0 auto 40px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .emphasis {
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        /* 测试信息卡片 */
+        .test-info-cards {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 60px 0 40px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.5s forwards;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            width: 280px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .info-card-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .info-card-title {
+            font-size: 1.7rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .info-card-text {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* 进入按钮 */
+        .enter-button-container {
+            margin-top: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 3s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .enter-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            padding: 22px 60px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(93, 138, 168, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enter-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 18px 40px rgba(93, 138, 168, 0.5);
+            background: linear-gradient(to right, var(--primary-light), var(--primary));
+        }
+
+        .enter-button:hover .button-icon {
+            transform: translateX(8px) rotate(360deg);
+        }
+
+        .enter-button:active {
+            transform: translateY(-2px);
+        }
+
+        .button-icon {
+            font-size: 1.8rem;
+            transition: transform 0.5s ease;
+        }
+
+        .button-text {
+            font-size: 1.5rem;
+            letter-spacing: 1.5px;
+        }
+
+        .enter-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.8s;
+        }
+
+        .enter-button:hover::before {
+            left: 100%;
+        }
+
+        /* 测试说明 */
+        .test-description {
+            max-width: 900px;
+            margin: 80px auto 40px;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            opacity: 0;
+            animation: fadeIn 1s ease-out 2s forwards;
+        }
+
+        .test-description h3 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .test-description p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .test-description ul {
+            padding-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        .test-description li {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 25px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            color: var(--secondary);
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            margin-bottom: 12px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--secondary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .welcome-title {
+                font-size: 3.2rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 1.8rem;
+            }
+
+            .test-info-cards {
+                gap: 20px;
+            }
+
+            .info-card {
+                width: 100%;
+                max-width: 400px;
+            }
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-                border-radius: 15px;
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
             }
 
-            h1 {
+            .welcome-title {
+                font-size: 2.5rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 1.6rem;
+            }
+
+            .welcome-text {
+                font-size: 1.15rem;
+            }
+
+            .enter-button {
+                padding: 20px 45px;
+                font-size: 1.3rem;
+            }
+
+            .test-description {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-title {
                 font-size: 2rem;
             }
 
-            .option {
-                padding: 15px;
+            .welcome-icon {
+                font-size: 5rem;
             }
 
-            .score-circle {
-                width: 150px;
-                height: 150px;
+            .enter-button {
+                padding: 18px 35px;
+                font-size: 1.2rem;
             }
 
-            .score-value {
-                font-size: 2.8rem;
+            .info-card {
+                padding: 25px;
             }
-        }
-
-        /* 结果颜色分类 */
-        .low-score {
-            border-color: #38b2ac;
-            color: #234e52;
-        }
-
-        .medium-score {
-            border-color: #d69e2e;
-            color: #744210;
-        }
-
-        .high-score {
-            border-color: #e53e3e;
-            color: #742a2a;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-brain"></i> 心理健康自测评估</h1>
-            <p class="subtitle">本测试旨在帮助您了解当前的心理状态，提供参考建议，并非专业诊断。如有需要，请咨询专业心理健康服务人员。</p>
-        </header>
-
-        <!-- 介绍部分 -->
-        <section id="intro-section" class="test-section active-section">
-            <div class="intro-text">
-                <p>欢迎参加心理健康自测评估！</p>
-                <p>本测试包含10个问题，评估您最近两周的心理状态。</p>
-                <p>请根据您的实际情况选择最符合的选项。所有回答将被保密。</p>
-                <p>完成测试后，您将获得个性化评估结果和建议。</p>
-                <p>测试大约需要5-8分钟完成。</p>
-            </div>
-            <div style="text-align: center;">
-                <button id="start-test" class="btn">
-                    <i class="fas fa-play-circle"></i> 开始测试
-                </button>
-            </div>
-        </section>
-
-        <!-- 测试部分 -->
-        <section id="test-section" class="test-section">
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
-                </div>
-                <div class="progress-text">
-                    <span id="current-question">1</span> / <span id="total-questions">10</span>
-                </div>
-            </div>
-
-            <div class="question-container">
-                <div class="question" id="question-text"></div>
-                <div class="options" id="options-container"></div>
-            </div>
-
-            <div class="navigation">
-                <button id="prev-btn" class="btn hidden">
-                    <i class="fas fa-arrow-left"></i> 上一题
-                </button>
-                <button id="next-btn" class="btn">
-                    下一题 <i class="fas fa-arrow-right"></i>
-                </button>
-                <button id="submit-test" class="btn hidden">
-                    <i class="fas fa-paper-plane"></i> 提交测试
-                </button>
-            </div>
-        </section>
-
-        <!-- 结果部分 -->
-        <section id="result-section" class="test-section">
-            <div class="result-container">
-                <div class="score-circle" id="score-circle">
-                    <div class="score-value" id="score-value">0</div>
-                    <div class="score-label">测试得分</div>
-                </div>
-
-                <h2 class="result-title" id="result-title"></h2>
-                <p class="result-description" id="result-description"></p>
-
-                <div class="suggestions">
-                    <h3><i class="fas fa-lightbulb"></i> 个性化建议</h3>
-                    <ul id="suggestions-list"></ul>
-                </div>
-
-                <div class="warning">
-                    <p><strong>重要提示：</strong>本测试结果仅供参考，不能替代专业心理评估或诊断。如果您感到持续的情绪困扰或心理压力，建议咨询心理健康专业人士。</p>
-                </div>
-
-                <div style="margin-top: 30px;">
-                    <button id="retake-test" class="btn">
-                        <i class="fas fa-redo"></i> 重新测试
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <p>© 2025 心理健康自测评估 | 本工具仅供自我了解参考</p>
-            <p>如果您需要专业帮助，请拨打心理援助热线：12320</p>
-        </footer>
+    <!-- 背景动画 -->
+    <div class="background-animation">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
     </div>
 
-    <script>
-        // 测试数据
-        const testData = {
-            title: "心理健康自测评估",
-            questions: [
-                {
-                    text: "最近两周，您感到情绪低落、沮丧或绝望的频率如何？",
-                    options: [
-                        { text: "几乎没有", score: 0 },
-                        { text: "偶尔（每周1-2天）", score: 1 },
-                        { text: "经常（每周3-4天）", score: 2 },
-                        { text: "几乎每天", score: 3 }
-                    ]
-                },
-                {
-                    text: "您是否对以往感兴趣的活动失去了兴趣或乐趣？",
-                    options: [
-                        { text: "完全没有", score: 0 },
-                        { text: "有一点", score: 1 },
-                        { text: "比较明显", score: 2 },
-                        { text: "非常明显", score: 3 }
-                    ]
-                },
-                {
-                    text: "最近两周，您的睡眠状况如何？",
-                    options: [
-                        { text: "睡眠良好", score: 0 },
-                        { text: "偶尔失眠或嗜睡", score: 1 },
-                        { text: "经常失眠或嗜睡", score: 2 },
-                        { text: "严重失眠或嗜睡", score: 3 }
-                    ]
-                },
-                {
-                    text: "您是否感到疲劳或精力不足？",
-                    options: [
-                        { text: "几乎没有", score: 0 },
-                        { text: "偶尔", score: 1 },
-                        { text: "经常", score: 2 },
-                        { text: "几乎总是", score: 3 }
-                    ]
-                },
-                {
-                    text: "您的食欲或体重有明显变化吗？",
-                    options: [
-                        { text: "没有变化", score: 0 },
-                        { text: "轻微变化", score: 1 },
-                        { text: "明显变化", score: 2 },
-                        { text: "极大变化", score: 3 }
-                    ]
-                },
-                {
-                    text: "您是否感到自责或无价值感？",
-                    options: [
-                        { text: "几乎没有", score: 0 },
-                        { text: "偶尔", score: 1 },
-                        { text: "经常", score: 2 },
-                        { text: "几乎总是", score: 3 }
-                    ]
-                },
-                {
-                    text: "您集中注意力或做决定是否有困难？",
-                    options: [
-                        { text: "没有困难", score: 0 },
-                        { text: "偶尔有困难", score: 1 },
-                        { text: "经常有困难", score: 2 },
-                        { text: "几乎无法集中注意力", score: 3 }
-                    ]
-                },
-                {
-                    text: "您是否感到不安、烦躁或易怒？",
-                    options: [
-                        { text: "几乎没有", score: 0 },
-                        { text: "偶尔", score: 1 },
-                        { text: "经常", score: 2 },
-                        { text: "几乎总是", score: 3 }
-                    ]
-                },
-                {
-                    text: "您是否有过伤害自己或自杀的想法？",
-                    options: [
-                        { text: "从来没有", score: 0 },
-                        { text: "偶尔想过但不会实施", score: 1 },
-                        { text: "有时会认真考虑", score: 2 },
-                        { text: "经常考虑或有计划", score: 3 }
-                    ]
-                },
-                {
-                    text: "您的日常生活和社交活动是否受到影响？",
-                    options: [
-                        { text: "没有影响", score: 0 },
-                        { text: "轻微影响", score: 1 },
-                        { text: "明显影响", score: 2 },
-                        { text: "严重影响", score: 3 }
-                    ]
-                }
-            ]
-        };
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <h1>情绪管理与<span>心理韧性</span>测试</h1>
+            </div>
 
-        // 结果评估数据
-        const resultData = {
-            low: {
-                title: "心理健康状况良好",
-                description: "根据您的回答，您目前表现出较好的心理健康状态。您的情绪较为稳定，能够应对日常压力，并且保持积极的生活态度。",
-                suggestions: [
-                    "继续保持健康的生活方式，包括规律作息和均衡饮食",
-                    "定期进行体育锻炼，有助于释放压力和维持情绪稳定",
-                    "保持社交联系，与家人朋友保持良好沟通",
-                    "培养兴趣爱好，为生活增添乐趣",
-                    "学习压力管理技巧，为未来可能遇到的挑战做准备"
-                ],
-                colorClass: "low-score",
-                scoreRange: [0, 10]
-            },
-            medium: {
-                title: "存在轻微心理困扰",
-                description: "根据您的回答，您可能正在经历一些心理困扰或压力。这些感受在许多人生活中都会出现，但值得关注并采取适当措施来改善。",
-                suggestions: [
-                    "尝试记录情绪日记，了解触发情绪变化的原因",
-                    "练习放松技巧，如深呼吸、冥想或渐进性肌肉放松",
-                    "与信任的朋友或家人分享您的感受",
-                    "适当减少工作或学习负担，给自己休息时间",
-                    "考虑与心理咨询师进行短暂交流，获得专业指导"
-                ],
-                colorClass: "medium-score",
-                scoreRange: [11, 20]
-            },
-            high: {
-                title: "需要关注心理健康",
-                description: "根据您的回答，您可能正在经历明显的心理困扰。这些感受可能影响了您的日常生活。建议您认真对待这些信号，并考虑寻求专业支持。",
-                suggestions: [
-                    "强烈建议咨询心理健康专业人士进行评估",
-                    "与家人或亲密朋友沟通您的状况，寻求支持",
-                    "避免使用酒精或药物来处理情绪问题",
-                    "建立规律的生活作息，保证充足睡眠",
-                    "如有伤害自己的想法，请立即联系心理危机干预热线"
-                ],
-                colorClass: "high-score",
-                scoreRange: [21, 30]
-            }
-        };
+            <nav>
+                <ul>
+                    <li><a href="#about">关于测试</a></li>
+                    <li><a href="#description">测试说明</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-        // 应用状态
-        let currentQuestion = 0;
-        let userAnswers = [];
-        let totalScore = 0;
+    <!-- 主要内容区域 -->
+    <main>
+        <div class="welcome-content">
+            <div class="welcome-icon">
+                <i class="fas fa-heartbeat"></i>
+            </div>
 
-        // DOM元素
-        const introSection = document.getElementById('intro-section');
-        const testSection = document.getElementById('test-section');
-        const resultSection = document.getElementById('result-section');
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const progressFill = document.getElementById('progress-fill');
-        const currentQuestionElement = document.getElementById('current-question');
-        const totalQuestionsElement = document.getElementById('total-questions');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const submitTestBtn = document.getElementById('submit-test');
-        const startTestBtn = document.getElementById('start-test');
-        const retakeTestBtn = document.getElementById('retake-test');
-        const scoreCircle = document.getElementById('score-circle');
-        const scoreValue = document.getElementById('score-value');
-        const resultTitle = document.getElementById('result-title');
-        const resultDescription = document.getElementById('result-description');
-        const suggestionsList = document.getElementById('suggestions-list');
+            <h1 class="welcome-title">情绪管理与心理韧性测试</h1>
+            <h2 class="welcome-subtitle">探索你的内心力量</h2>
 
-        // 初始化
-        function initTest() {
-            totalQuestionsElement.textContent = testData.questions.length;
-            currentQuestion = 0;
-            userAnswers = new Array(testData.questions.length).fill(null);
-            totalScore = 0;
-            updateProgress();
-            showQuestion(currentQuestion);
+            <p class="welcome-text">
+                本测试围绕<span class="highlight">情绪感知、人际互动、压力应对</span>等维度设计，共50道题目。
+                通过科学评估，帮助你了解自己的<span class="emphasis">情绪管理能力</span>和<span class="emphasis">心理韧性水平</span>，
+                获取个性化建议，提升心理健康与生活质量。
+            </p>
 
-            // 更新按钮状态
-            updateNavigationButtons();
-        }
+            <div class="test-info-cards">
+                <div class="info-card">
+                    <div class="info-card-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="info-card-title">50道专业题目</h3>
+                    <p class="info-card-text">涵盖情绪感知、压力应对、人际互动等多个维度，全面评估您的心理状态。</p>
+                </div>
 
-        // 显示问题
-        function showQuestion(index) {
-            const question = testData.questions[index];
-            questionText.textContent = `${index + 1}. ${question.text}`;
+                <div class="info-card">
+                    <div class="info-card-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h3 class="info-card-title">科学评估体系</h3>
+                    <p class="info-card-text">基于心理学研究设计，确保测试结果的可靠性和有效性。</p>
+                </div>
 
-            // 清空选项容器
-            optionsContainer.innerHTML = '';
+                <div class="info-card">
+                    <div class="info-card-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="info-card-title">个性化建议</h3>
+                    <p class="info-card-text">根据您的测试结果提供针对性的改进建议，帮助您提升心理韧性。</p>
+                </div>
+            </div>
 
-            // 添加选项
-            question.options.forEach((option, optionIndex) => {
-                const optionElement = document.createElement('div');
-                optionElement.className = 'option';
-                if (userAnswers[index] === optionIndex) {
-                    optionElement.classList.add('selected');
-                }
+            <div class="enter-button-container">
+                <a href="test.html" class="enter-button">
+                    <span class="button-icon"><i class="fas fa-arrow-right"></i></span>
+                    <span class="button-text">开始心理测试</span>
+                </a>
+            </div>
 
-                optionElement.innerHTML = `
-                    <div class="option-number">${String.fromCharCode(65 + optionIndex)}</div>
-                    <div class="option-text">${option.text}</div>
-                `;
+            <div class="test-description" id="description">
+                <h3>测试说明</h3>
+                <p>本测试共50道题，围绕情绪感知、人际互动、压力应对等维度设计。请根据自身实际情况选择最符合的选项。</p>
+                <p><strong>计分方式：</strong>每道题有三个选项，分别对应不同的分数。完成所有题目后，系统会自动计算总分并显示详细分析。</p>
+                <p><strong>测试结果将分为四个水平：</strong></p>
+                <ul>
+                    <li><strong>优秀水平 (200-250分)：</strong>情绪管理能力和心理韧性极强</li>
+                    <li><strong>良好水平 (150-199分)：</strong>心理状态整体良好，具备基本情绪调节能力</li>
+                    <li><strong>一般水平 (100-149分)：</strong>心理状态存在一定提升空间</li>
+                    <li><strong>需关注水平 (50-99分)：</strong>心理状态可能面临较多挑战，建议关注</li>
+                </ul>
+                <p>完成测试约需要15-20分钟，请选择一个安静的环境，如实回答所有问题。</p>
+            </div>
+        </div>
+    </main>
 
-                optionElement.addEventListener('click', () => {
-                    selectOption(index, optionIndex);
-                });
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>情绪管理与心理韧性测试</h3>
+                    <p>专业的心理评估工具，帮助您了解自己的情绪管理能力和心理韧性水平。</p>
+                </div>
 
-                optionsContainer.appendChild(optionElement);
-            });
+                <div class="footer-section" id="about">
+                    <h3>关于测试</h3>
+                    <p>测试基于心理学理论和科学研究，旨在提供可靠、有效的自我认知工具。所有测试结果仅供个人参考。</p>
+                </div>
 
-            // 更新当前问题显示
-            currentQuestionElement.textContent = index + 1;
+                <div class="footer-section" id="contact">
+                    <h3>联系我们</h3>
+                    <p><i class="fas fa-envelope"></i> contact@emotionaltest.com</p>
+                    <p><i class="fas fa-phone"></i> 400-123-4567</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 锦心心理咨询</p>
+                </div>
+            </div>
 
-            // 更新进度条
-            updateProgress();
-        }
-
-        // 选择选项
-        function selectOption(questionIndex, optionIndex) {
-            userAnswers[questionIndex] = optionIndex;
-
-            // 更新UI
-            const options = document.querySelectorAll('.option');
-            options.forEach((option, idx) => {
-                if (Math.floor(idx / testData.questions[questionIndex].options.length) === questionIndex) {
-                    const relativeIndex = idx % testData.questions[questionIndex].options.length;
-                    if (relativeIndex === optionIndex) {
-                        option.classList.add('selected');
-                    } else {
-                        option.classList.remove('selected');
-                    }
-                }
-            });
-
-            // 启用下一题按钮
-            if (currentQuestion < testData.questions.length - 1) {
-                nextBtn.disabled = false;
-            } else {
-                submitTestBtn.classList.remove('hidden');
-                nextBtn.classList.add('hidden');
-            }
-        }
-
-        // 更新进度
-        function updateProgress() {
-            const progress = ((currentQuestion + 1) / testData.questions.length) * 100;
-            progressFill.style.width = `${progress}%`;
-        }
-
-        // 更新导航按钮状态
-        function updateNavigationButtons() {
-            // 上一题按钮
-            if (currentQuestion > 0) {
-                prevBtn.classList.remove('hidden');
-            } else {
-                prevBtn.classList.add('hidden');
-            }
-
-            // 下一题按钮
-            if (currentQuestion < testData.questions.length - 1) {
-                nextBtn.classList.remove('hidden');
-                submitTestBtn.classList.add('hidden');
-            } else {
-                nextBtn.classList.add('hidden');
-                // 如果已回答最后一题，显示提交按钮
-                if (userAnswers[currentQuestion] !== null) {
-                    submitTestBtn.classList.remove('hidden');
-                }
-            }
-
-            // 禁用下一题按钮如果当前问题未回答
-            if (userAnswers[currentQuestion] === null) {
-                nextBtn.disabled = true;
-            } else {
-                nextBtn.disabled = false;
-            }
-        }
-
-        // 计算总分
-        function calculateScore() {
-            totalScore = 0;
-            userAnswers.forEach((answerIndex, questionIndex) => {
-                if (answerIndex !== null) {
-                    totalScore += testData.questions[questionIndex].options[answerIndex].score;
-                }
-            });
-            return totalScore;
-        }
-
-        // 显示结果
-        function showResult() {
-            const score = calculateScore();
-            scoreValue.textContent = score;
-
-            // 确定结果类型
-            let resultType;
-            if (score <= 10) {
-                resultType = 'low';
-            } else if (score <= 20) {
-                resultType = 'medium';
-            } else {
-                resultType = 'high';
-            }
-
-            const result = resultData[resultType];
-
-            // 更新结果UI
-            resultTitle.textContent = result.title;
-            resultDescription.textContent = result.description;
-
-            // 更新分数圆圈
-            scoreCircle.className = 'score-circle ' + result.colorClass;
-
-            // 更新建议列表
-            suggestionsList.innerHTML = '';
-            result.suggestions.forEach(suggestion => {
-                const li = document.createElement('li');
-                li.textContent = suggestion;
-                suggestionsList.appendChild(li);
-            });
-
-            // 显示结果部分
-            switchSection('result');
-        }
-
-        // 切换部分
-        function switchSection(section) {
-            // 隐藏所有部分
-            introSection.classList.remove('active-section');
-            testSection.classList.remove('active-section');
-            resultSection.classList.remove('active-section');
-
-            // 显示目标部分
-            if (section === 'intro') {
-                introSection.classList.add('active-section');
-            } else if (section === 'test') {
-                testSection.classList.add('active-section');
-            } else if (section === 'result') {
-                resultSection.classList.add('active-section');
-            }
-        }
-
-        // 事件监听器
-        startTestBtn.addEventListener('click', () => {
-            initTest();
-            switchSection('test');
-        });
-
-        prevBtn.addEventListener('click', () => {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                showQuestion(currentQuestion);
-                updateNavigationButtons();
-            }
-        });
-
-        nextBtn.addEventListener('click', () => {
-            if (currentQuestion < testData.questions.length - 1) {
-                currentQuestion++;
-                showQuestion(currentQuestion);
-                updateNavigationButtons();
-            }
-        });
-
-        submitTestBtn.addEventListener('click', () => {
-            // 检查是否所有问题都已回答
-            const unanswered = userAnswers.some(answer => answer === null);
-            if (unanswered) {
-                alert('请回答所有问题后再提交');
-                return;
-            }
-            showResult();
-        });
-
-        retakeTestBtn.addEventListener('click', () => {
-            initTest();
-            switchSection('intro');
-        });
-
-        // 初始化
-        initTest();
-        switchSection('intro');
-    </script>
+            <div class="copyright">
+                <p>&copy; 2025 情绪管理与心理韧性测试平台. 保留所有权利.</p>
+                <p>本测试结果仅供参考，不能替代专业心理咨询或诊断。如有需要，请寻求专业心理帮助。</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
