@@ -1,648 +1,114 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>情绪管理与心理韧性测试</title>
+    <title>心理健康自评量表测试系统 (SAS & SDS)</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-        }
-
-        :root {
-            --primary: #5d8aa8;
-            --primary-light: #7ba6c2;
-            --secondary: #ff9a76;
-            --secondary-light: #ffb696;
-            --dark: #2c3e50;
-            --light: #f8f9fa;
-            --gray: #e9ecef;
-        }
-
-        body {
-            background-color: #f5f7fb;
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* 背景效果 */
-        .background-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .bubble {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(93, 138, 168, 0.1) 0%, rgba(93, 138, 168, 0) 70%);
-            animation: float 25s infinite linear;
-        }
-
-        .bubble:nth-child(1) {
-            width: 100px;
-            height: 100px;
-            top: 10%;
-            left: 5%;
-            animation-delay: 0s;
-            background: radial-gradient(circle, rgba(93, 138, 168, 0.15) 0%, rgba(93, 138, 168, 0) 70%);
-        }
-
-        .bubble:nth-child(2) {
-            width: 150px;
-            height: 150px;
-            top: 65%;
-            left: 85%;
-            animation-delay: -8s;
-            background: radial-gradient(circle, rgba(255, 154, 118, 0.12) 0%, rgba(255, 154, 118, 0) 70%);
-        }
-
-        .bubble:nth-child(3) {
-            width: 80px;
-            height: 80px;
-            top: 80%;
-            left: 15%;
-            animation-delay: -15s;
-            background: radial-gradient(circle, rgba(93, 138, 168, 0.1) 0%, rgba(93, 138, 168, 0) 70%);
-        }
-
-        .bubble:nth-child(4) {
-            width: 120px;
-            height: 120px;
-            top: 30%;
-            left: 90%;
-            animation-delay: -5s;
-            background: radial-gradient(circle, rgba(255, 154, 118, 0.1) 0%, rgba(255, 154, 118, 0) 70%);
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0) rotate(0deg);
-                opacity: 0.6;
-            }
-            25% {
-                transform: translateY(-30px) translateX(15px) rotate(90deg);
-                opacity: 0.4;
-            }
-            50% {
-                transform: translateY(0) translateX(30px) rotate(180deg);
-                opacity: 0.6;
-            }
-            75% {
-                transform: translateY(30px) translateX(15px) rotate(270deg);
-                opacity: 0.4;
-            }
-            100% {
-                transform: translateY(0) translateX(0) rotate(360deg);
-                opacity: 0.6;
-            }
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* 头部样式 */
-        header {
-            background: linear-gradient(135deg, rgba(93, 138, 168, 0.95) 0%, rgba(44, 62, 80, 0.95) 100%);
-            color: white;
-            padding: 25px 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo i {
-            font-size: 2.8rem;
-            color: var(--secondary);
-        }
-
-        .logo h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .logo span {
-            color: var(--secondary);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: color 0.3s;
-            padding: 8px 12px;
-            border-radius: 4px;
-        }
-
-        nav a:hover {
-            color: var(--secondary);
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        /* 主要内容区域 */
-        .welcome-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 80px 20px 60px;
-            animation: fadeIn 1.5s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .welcome-icon {
-            font-size: 6rem;
-            color: var(--primary);
-            margin-bottom: 40px;
-            animation: pulse 3s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                color: var(--primary);
-            }
-            50% {
-                transform: scale(1.05);
-                color: var(--primary-light);
-            }
-            100% {
-                transform: scale(1);
-                color: var(--primary);
-            }
-        }
-
-        .welcome-title {
-            font-size: 4rem;
-            color: var(--dark);
-            margin-bottom: 25px;
-            line-height: 1.2;
-        }
-
-        .welcome-subtitle {
-            font-size: 2.2rem;
-            color: var(--primary);
-            margin-bottom: 25px;
-            font-weight: 300;
-        }
-
-        .welcome-text {
-            font-size: 1.3rem;
-            max-width: 850px;
-            margin: 0 auto 40px;
-            color: #555;
-            line-height: 1.8;
-        }
-
-        .highlight {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .emphasis {
-            color: var(--secondary);
-            font-weight: 700;
-        }
-
-        /* 测试信息卡片 */
-        .test-info-cards {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin: 60px 0 40px;
-            opacity: 0;
-            animation: fadeIn 1s ease-out 1.5s forwards;
-        }
-
-        .info-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            width: 280px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .info-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-        }
-
-        .info-card-icon {
-            font-size: 3.5rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-
-        .info-card-title {
-            font-size: 1.7rem;
-            color: var(--dark);
-            margin-bottom: 15px;
-        }
-
-        .info-card-text {
-            color: #666;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
-        /* 进入按钮 */
-        .enter-button-container {
-            margin-top: 40px;
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 3s forwards;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .enter-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 20px;
-            background: linear-gradient(to right, var(--primary), var(--primary-light));
-            color: white;
-            padding: 22px 60px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.5rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(93, 138, 168, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .enter-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 18px 40px rgba(93, 138, 168, 0.5);
-            background: linear-gradient(to right, var(--primary-light), var(--primary));
-        }
-
-        .enter-button:hover .button-icon {
-            transform: translateX(8px) rotate(360deg);
-        }
-
-        .enter-button:active {
-            transform: translateY(-2px);
-        }
-
-        .button-icon {
-            font-size: 1.8rem;
-            transition: transform 0.5s ease;
-        }
-
-        .button-text {
-            font-size: 1.5rem;
-            letter-spacing: 1.5px;
-        }
-
-        .enter-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.8s;
-        }
-
-        .enter-button:hover::before {
-            left: 100%;
-        }
-
-        /* 测试说明 */
-        .test-description {
-            max-width: 900px;
-            margin: 80px auto 40px;
-            padding: 40px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            opacity: 0;
-            animation: fadeIn 1s ease-out 2s forwards;
-        }
-
-        .test-description h3 {
-            font-size: 2rem;
-            color: var(--dark);
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .test-description p {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 20px;
-            line-height: 1.8;
-        }
-
-        .test-description ul {
-            padding-left: 25px;
-            margin-bottom: 20px;
-        }
-
-        .test-description li {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 10px;
-            line-height: 1.6;
-        }
-
-        /* 页脚 */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 50px 0 25px;
-            margin-top: 80px;
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-section {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        .footer-section h3 {
-            font-size: 1.4rem;
-            margin-bottom: 25px;
-            color: var(--secondary);
-        }
-
-        .footer-section p, .footer-section a {
-            color: #ccc;
-            margin-bottom: 12px;
-            display: block;
-            text-decoration: none;
-            transition: color 0.3s;
-            font-size: 1.1rem;
-        }
-
-        .footer-section a:hover {
-            color: var(--secondary);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #aaa;
-            font-size: 0.95rem;
-        }
-
-        /* 响应式设计 */
-        @media (max-width: 992px) {
-            .welcome-title {
-                font-size: 3.2rem;
-            }
-
-            .welcome-subtitle {
-                font-size: 1.8rem;
-            }
-
-            .test-info-cards {
-                gap: 20px;
-            }
-
-            .info-card {
-                width: 100%;
-                max-width: 400px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .welcome-title {
-                font-size: 2.5rem;
-            }
-
-            .welcome-subtitle {
-                font-size: 1.6rem;
-            }
-
-            .welcome-text {
-                font-size: 1.15rem;
-            }
-
-            .enter-button {
-                padding: 20px 45px;
-                font-size: 1.3rem;
-            }
-
-            .test-description {
-                padding: 30px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .welcome-title {
-                font-size: 2rem;
-            }
-
-            .welcome-icon {
-                font-size: 5rem;
-            }
-
-            .enter-button {
-                padding: 18px 35px;
-                font-size: 1.2rem;
-            }
-
-            .info-card {
-                padding: 25px;
-            }
-        }
-    </style>
 </head>
 <body>
-    <!-- 背景动画 -->
-    <div class="background-animation">
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-heartbeat"></i> 心理健康自评量表测试系统</h1>
+            <p class="subtitle">本系统提供焦虑自评量表(SAS)和抑郁自评量表(SDS)测试，帮助您了解当前的情绪状态。测试结果仅供参考，不能替代专业诊断。</p>
+        </header>
+        
+        <div class="test-selector">
+            <button class="test-btn sas-btn active" data-test="sas">
+                <i class="fas fa-brain"></i> 焦虑自评量表 (SAS)
+            </button>
+            <button class="test-btn sds-btn" data-test="sds">
+                <i class="fas fa-cloud"></i> 抑郁自评量表 (SDS)
+            </button>
+        </div>
+        
+        <div class="test-content">
+            <!-- SAS测试部分 -->
+            <div id="sas-scale" class="scale-container active">
+                <div class="instructions">
+                    <h3><i class="fas fa-info-circle"></i> 测试说明</h3>
+                    <p><strong>焦虑自评量表(SAS)</strong>：包含20个题目，用于评估最近一周的焦虑症状。</p>
+                    <p><strong>评分标准</strong>：</p>
+                    <ul>
+                        <li><strong>从无</strong>：1分 - 没有或很少时间有</li>
+                        <li><strong>有时</strong>：2分 - 少部分时间有</li>
+                        <li><strong>经常</strong>：3分 - 相当多时间有</li>
+                        <li><strong>持续</strong>：4分 - 绝大部分或全部时间有</li>
+                    </ul>
+                    <p><strong>注意</strong>：第5、9、13、17、19题为反向计分题(4,3,2,1)。标准分=合计得分×1.25。</p>
+                </div>
+                
+                <h2 class="scale-title"><i class="fas fa-brain"></i> 焦虑自评量表 (SAS)</h2>
+                
+                <div class="questions-container" id="sas-questions">
+                    <!-- SAS问题将通过JavaScript动态生成 -->
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="calculate-sas" class="calculate-btn">
+                        <i class="fas fa-calculator"></i> 计算得分
+                    </button>
+                    <button id="reset-sas" class="reset-btn">
+                        <i class="fas fa-redo"></i> 重新测试
+                    </button>
+                </div>
+                
+                <div id="sas-result" class="result-container">
+                    <!-- 结果将通过JavaScript动态生成 -->
+                </div>
+            </div>
+            
+            <!-- SDS测试部分 -->
+            <div id="sds-scale" class="scale-container">
+                <div class="instructions">
+                    <h3><i class="fas fa-info-circle"></i> 测试说明</h3>
+                    <p><strong>抑郁自评量表(SDS)</strong>：包含20个题目，用于评估最近一周的抑郁症状。</p>
+                    <p><strong>评分标准</strong>：</p>
+                    <ul>
+                        <li><strong>从无</strong>：1分 - 没有或很少时间有</li>
+                        <li><strong>有时</strong>：2分 - 少部分时间有</li>
+                        <li><strong>经常</strong>：3分 - 相当多时间有</li>
+                        <li><strong>持续</strong>：4分 - 绝大部分或全部时间有</li>
+                    </ul>
+                    <p><strong>注意</strong>：第2、5、6、11、12、14、16、17、18、20题为反向计分题(4,3,2,1)。标准分=合计得分×1.25。</p>
+                </div>
+                
+                <h2 class="scale-title"><i class="fas fa-cloud"></i> 抑郁自评量表 (SDS)</h2>
+                
+                <div class="questions-container" id="sds-questions">
+                    <!-- SDS问题将通过JavaScript动态生成 -->
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="calculate-sds" class="calculate-btn">
+                        <i class="fas fa-calculator"></i> 计算得分
+                    </button>
+                    <button id="reset-sds" class="reset-btn">
+                        <i class="fas fa-redo"></i> 重新测试
+                    </button>
+                </div>
+                
+                <div id="sds-result" class="result-container">
+                    <!-- 结果将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p><i class="fas fa-exclamation-triangle"></i> <strong>重要提示</strong>：本测试结果仅供参考，不能替代专业医疗诊断。如果您感到持续的情绪困扰，请及时寻求专业心理咨询或医疗帮助。</p>
+        </footer>
     </div>
+    
+    <script src="script.js"></script>
+</body>
+</html></title>
+</head>
+<body>
 
-    <!-- 头部 -->
-    <header>
-        <div class="container header-content">
-            <div class="logo">
-                <i class="fas fa-brain"></i>
-                <h1>情绪管理与<span>心理韧性</span>测试</h1>
-            </div>
-
-            <nav>
-                <ul>
-                    <li><a href="#about">关于测试</a></li>
-                    <li><a href="#description">测试说明</a></li>
-                    <li><a href="#contact">联系我们</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- 主要内容区域 -->
-    <main>
-        <div class="welcome-content">
-            <div class="welcome-icon">
-                <i class="fas fa-heartbeat"></i>
-            </div>
-
-            <h1 class="welcome-title">情绪管理与心理韧性测试</h1>
-            <h2 class="welcome-subtitle">探索你的内心力量</h2>
-
-            <p class="welcome-text">
-                本测试围绕<span class="highlight">情绪感知、人际互动、压力应对</span>等维度设计，共50道题目。
-                通过科学评估，帮助你了解自己的<span class="emphasis">情绪管理能力</span>和<span class="emphasis">心理韧性水平</span>，
-                获取个性化建议，提升心理健康与生活质量。
-            </p>
-
-            <div class="test-info-cards">
-                <div class="info-card">
-                    <div class="info-card-icon">
-                        <i class="fas fa-chart-bar"></i>
-                    </div>
-                    <h3 class="info-card-title">50道专业题目</h3>
-                    <p class="info-card-text">涵盖情绪感知、压力应对、人际互动等多个维度，全面评估您的心理状态。</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-card-icon">
-                        <i class="fas fa-user-check"></i>
-                    </div>
-                    <h3 class="info-card-title">科学评估体系</h3>
-                    <p class="info-card-text">基于心理学研究设计，确保测试结果的可靠性和有效性。</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-card-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <h3 class="info-card-title">个性化建议</h3>
-                    <p class="info-card-text">根据您的测试结果提供针对性的改进建议，帮助您提升心理韧性。</p>
-                </div>
-            </div>
-
-            <div class="enter-button-container">
-                <a href="test.html" class="enter-button">
-                    <span class="button-icon"><i class="fas fa-arrow-right"></i></span>
-                    <span class="button-text">开始心理测试</span>
-                </a>
-            </div>
-
-            <div class="test-description" id="description">
-                <h3>测试说明</h3>
-                <p>本测试共50道题，围绕情绪感知、人际互动、压力应对等维度设计。请根据自身实际情况选择最符合的选项。</p>
-                <p><strong>计分方式：</strong>每道题有三个选项，分别对应不同的分数。完成所有题目后，系统会自动计算总分并显示详细分析。</p>
-                <p><strong>测试结果将分为四个水平：</strong></p>
-                <ul>
-                    <li><strong>优秀水平 (200-250分)：</strong>情绪管理能力和心理韧性极强</li>
-                    <li><strong>良好水平 (150-199分)：</strong>心理状态整体良好，具备基本情绪调节能力</li>
-                    <li><strong>一般水平 (100-149分)：</strong>心理状态存在一定提升空间</li>
-                    <li><strong>需关注水平 (50-99分)：</strong>心理状态可能面临较多挑战，建议关注</li>
-                </ul>
-                <p>完成测试约需要15-20分钟，请选择一个安静的环境，如实回答所有问题。</p>
-            </div>
-        </div>
-    </main>
-
-    <!-- 页脚 -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>情绪管理与心理韧性测试</h3>
-                    <p>专业的心理评估工具，帮助您了解自己的情绪管理能力和心理韧性水平。</p>
-                </div>
-
-                <div class="footer-section" id="about">
-                    <h3>关于测试</h3>
-                    <p>测试基于心理学理论和科学研究，旨在提供可靠、有效的自我认知工具。所有测试结果仅供个人参考。</p>
-                </div>
-
-                <div class="footer-section" id="contact">
-                    <h3>联系我们</h3>
-                    <p><i class="fas fa-envelope"></i> contact@emotionaltest.com</p>
-                    <p><i class="fas fa-phone"></i> 400-123-4567</p>
-                    <p><i class="fas fa-map-marker-alt"></i> 锦心心理咨询</p>
-                </div>
-            </div>
-
-            <div class="copyright">
-                <p>&copy; 2025 情绪管理与心理韧性测试平台. 保留所有权利.</p>
-                <p>本测试结果仅供参考，不能替代专业心理咨询或诊断。如有需要，请寻求专业心理帮助。</p>
-            </div>
-        </div>
-    </footer>
 </body>
 </html>
