@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title><!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="专业心理健康自评工具：焦虑自评量表(SAS)和抑郁自评量表(SDS)。数据隐私安全，仅供个人参考使用。">
+    <meta name="keywords" content="心理健康,焦虑测试,抑郁测试,SAS,SDS,心理自评">
+    <meta name="author" content="心理健康测试工具">
+    <meta name="robots" content="index, follow">
     <title>心理健康自评量表测试系统 (SAS & SDS)</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,7 +17,7 @@
             <h1><i class="fas fa-heartbeat"></i> 心理健康自评量表测试系统</h1>
             <p class="subtitle">本系统提供焦虑自评量表(SAS)和抑郁自评量表(SDS)测试，帮助您了解当前的情绪状态。测试结果仅供参考，不能替代专业诊断。</p>
         </header>
-        
+
         <div class="test-selector">
             <button class="test-btn sas-btn active" data-test="sas">
                 <i class="fas fa-brain"></i> 焦虑自评量表 (SAS)
@@ -26,7 +26,7 @@
                 <i class="fas fa-cloud"></i> 抑郁自评量表 (SDS)
             </button>
         </div>
-        
+
         <div class="test-content">
             <!-- SAS测试部分 -->
             <div id="sas-scale" class="scale-container active">
@@ -42,13 +42,13 @@
                     </ul>
                     <p><strong>注意</strong>：第5、9、13、17、19题为反向计分题(4,3,2,1)。标准分=合计得分×1.25。</p>
                 </div>
-                
+
                 <h2 class="scale-title"><i class="fas fa-brain"></i> 焦虑自评量表 (SAS)</h2>
-                
+
                 <div class="questions-container" id="sas-questions">
                     <!-- SAS问题将通过JavaScript动态生成 -->
                 </div>
-                
+
                 <div class="action-buttons">
                     <button id="calculate-sas" class="calculate-btn">
                         <i class="fas fa-calculator"></i> 获取结果
@@ -57,12 +57,12 @@
                         <i class="fas fa-redo"></i> 重新测试
                     </button>
                 </div>
-                
+
                 <div id="sas-result" class="result-container">
                     <!-- 结果将通过JavaScript动态生成 -->
                 </div>
             </div>
-            
+
             <!-- SDS测试部分 -->
             <div id="sds-scale" class="scale-container">
                 <div class="instructions">
@@ -77,13 +77,13 @@
                     </ul>
                     <p><strong>注意</strong>：第2、5、6、11、12、14、16、17、18、20题为反向计分题(4,3,2,1)。标准分=合计得分×1.25。</p>
                 </div>
-                
+
                 <h2 class="scale-title"><i class="fas fa-cloud"></i> 抑郁自评量表 (SDS)</h2>
-                
+
                 <div class="questions-container" id="sds-questions">
                     <!-- SDS问题将通过JavaScript动态生成 -->
                 </div>
-                
+
                 <div class="action-buttons">
                     <button id="calculate-sds" class="calculate-btn">
                         <i class="fas fa-calculator"></i> 计算得分
@@ -92,23 +92,52 @@
                         <i class="fas fa-redo"></i> 重新测试
                     </button>
                 </div>
-                
+
                 <div id="sds-result" class="result-container">
                     <!-- 结果将通过JavaScript动态生成 -->
                 </div>
             </div>
         </div>
-        
+
+        <!-- 全局声明 -->
+        <div class="global-disclaimer">
+            <div class="disclaimer-content">
+                <h3><i class="fas fa-info-circle"></i> 使用说明与隐私声明</h3>
+
+                <div class="disclaimer-section">
+                    <h4><i class="fas fa-lock"></i> 数据隐私</h4>
+                    <p>• 所有测试数据仅存储于您的浏览器本地，不会上传到任何服务器</p>
+                    <p>• 我们不会收集、存储或分享您的个人信息</p>
+                    <p>• 刷新页面后数据自动清除</p>
+                </div>
+
+                <div class="disclaimer-section">
+                    <h4><i class="fas fa-exclamation-triangle"></i> 免责声明</h4>
+                    <p>• 本工具仅供个人参考，非专业诊断工具</p>
+                    <p>• 不能替代专业医疗建议</p>
+                    <p>• 如有需要，请咨询专业心理健康服务</p>
+                </div>
+
+                <div class="disclaimer-section">
+                    <h4><i class="fas fa-phone-alt"></i> 寻求帮助</h4>
+                    <p>如果您感到持续的情绪困扰，建议联系：</p>
+                    <p>• 专业心理咨询师</p>
+                    <p>• 当地心理健康服务机构</p>
+                    <p>• 联系我们：18576134@qq.com</p>
+                </div>
+
+                <div class="disclaimer-section">
+                    <h4><i class="fas fa-calendar-alt"></i> 更新信息</h4>
+                    <p>如需了解更多，请查看完整版 <a href="privacy.html" target="_blank">隐私政策</a> 和 <a href="disclaimer.html" target="_blank">免责声明</a></p>
+                </div>
+            </div>
+        </div>
+
         <footer>
-            <p><i class="fas fa-exclamation-triangle"></i> <strong>重要提示</strong>：本次测试结果只能代表最近三个月内的状态大家可以根据自己最近的实际情况结合量表进行对比 (以上测试仅供参考，分数较高建议您联系我们进行更专业的检测)</p>
+            <p><i class="fas fa-exclamation-triangle"></i> <strong>重要提示</strong>：本次测试结果仅供参考，不能替代专业医疗诊断。分数较高建议联系专业机构进行更详细的评估。</p>
         </footer>
     </div>
-    
-    <script src="script.js"></script>
-</body>
-</html></title>
-</head>
-<body>
 
+    <script src="script.js"></script>
 </body>
 </html>
