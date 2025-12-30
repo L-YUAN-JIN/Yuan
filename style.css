@@ -669,3 +669,173 @@ footer p {
         display: block !important;
     }
 }
+
+.privacy-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.privacy-content {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    animation: fadeIn 0.3s ease;
+}
+
+.privacy-content h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.privacy-text {
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.privacy-text h3 {
+    color: #3498db;
+    margin: 15px 0 8px 0;
+}
+
+.privacy-text ol {
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+.privacy-text li {
+    margin-bottom: 8px;
+}
+
+.privacy-buttons {
+    display: flex;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.privacy-btn {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.accept-btn {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+}
+
+.decline-btn {
+    background: #f8f9fa;
+    color: #e74c3c;
+    border: 2px solid #e74c3c;
+}
+
+.accept-btn:hover {
+    background: linear-gradient(135deg, #27ae60, #219653);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+}
+
+.decline-btn:hover {
+    background: #e74c3c;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.privacy-footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #7f8c8d;
+    border-top: 1px solid #ecf0f1;
+    padding-top: 15px;
+}
+
+/* ==================== 全局声明样式 ==================== */
+
+.global-disclaimer {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 30px 20px;
+    margin: 40px 0 20px 0;
+    border-radius: 12px;
+    border-top: 4px solid #3498db;
+}
+
+.disclaimer-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.global-disclaimer h3 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.disclaimer-section {
+    margin-bottom: 25px;
+}
+
+.disclaimer-section h4 {
+    color: #3498db;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #3498db;
+}
+
+.disclaimer-section p {
+    margin: 6px 0;
+    color: #5a6268;
+    line-height: 1.6;
+}
+
+/* ==================== 结果页面隐私通知 ==================== */
+
+.privacy-notice {
+    background: #f8f9fa;
+    border-left: 4px solid #3498db;
+    padding: 15px;
+    border-radius: 0 8px 8px 0;
+    margin: 15px 0;
+}
+
+.medical-disclaimer {
+    background: #fff8e1;
+    border-left: 4px solid #f39c12;
+    padding: 15px;
+    border-radius: 0 8px 8px 0;
+    margin: 15px 0;
+}
+
+.privacy-notice h4,
+.medical-disclaimer h4 {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
